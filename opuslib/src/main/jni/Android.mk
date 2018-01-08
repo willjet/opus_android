@@ -21,6 +21,17 @@ SILK_SOURCES += $(SILK_SOURCES_ARM)
 LOCAL_SRC_FILES     := \
 $(CELT_SOURCES) $(SILK_SOURCES) $(OPUS_SOURCES)
 
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+    LOCAL_CFLAGS := -DHAVE_NEON
+    LOCAL_SRC_FILES += helloneon-intrinsics.c.neon
+    LOCAL_ARM_NEON  := true
+endif
+
+#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+#    LOCAL_CFLAGS := -DHAVE_NEON -mfloat-abi=softfp -mfpu=neon -march=armv7-a
+#    LOCAL_SRC_FILES += helloneon-intrinsics.c.neon
+#endif
+
 LOCAL_LDLIBS        := -lm -llog
 
 LOCAL_C_INCLUDES    := \
